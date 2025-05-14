@@ -11,5 +11,5 @@ struct Backpack
 
     Backpack(int const& n, int const& k, std::vector<int> const& item_weights, std::vector<int> const& item_values);
 
-    auto compute() const -> void;
+    void compute() const;
 };

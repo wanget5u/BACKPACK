@@ -1,6 +1,7 @@
 #include "Backpack.h"
-#include "utils.h"
 #include <chrono>
+
+#include "utils.h"
 
 Backpack::Backpack(int const& n, int const& k, std::vector<int> const& item_weights, std::vector<int> const& item_values)
 {
@@ -20,9 +21,10 @@ Backpack::Backpack(int const& n, int const& k, std::vector<int> const& item_weig
     utils::printVector(item_values);
 }
 
-auto Backpack::compute() const -> void
+void Backpack::compute() const
 {
     int biggestValue = 0;
+    int biggestSubset = 0;
 
     const int totalSubsets = 1 << this -> n;
     std::cout << "Subsets = " << totalSubsets << std::endl;
@@ -44,9 +46,13 @@ auto Backpack::compute() const -> void
         }
 
         if (currentWeight <= this -> k && currentValue > biggestValue)
-        {biggestValue = currentValue;}
+        {
+            biggestValue = currentValue;
+            biggestSubset = subset;
+        }
     }
     std::cout << "Biggest achievable value = " << biggestValue << std::endl;
+    std::cout << "Biggest achievable subset = " << utils::decToBinary(biggestSubset) << std::endl;
 
     const auto endTime = std::chrono::high_resolution_clock::now();
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
